@@ -2,14 +2,15 @@ let taskList = [];
 const entryElm = document.getElementById("entry");
 const badElm = document.getElementById("bad");
 const totalHrElm = document.getElementById("totalHr");
+const ttlHrPerWeek = 24 * 7;
 
 const handleOnSubmit = (form) => {
     const newTask = new FormData(form);
-    const ttlHrPerWeek = 24 * 7;
+    
     const obj = {
         id: randomStr(),
         task: newTask.get("task").trim(),
-        hr: newTask.get("hr"),
+        hr: +newTask.get("hr"),
         type: "entry"
     };
 
@@ -19,12 +20,12 @@ const handleOnSubmit = (form) => {
         return alert ("Sorry not enough time let to fit this task from week")
     }
     console.log(ttlHrs);
+    console.log(ttlHrPerWeek);
 
     taskList.push(obj);
     // console.log(obj);
     displayEntryTask();
     displayBadTask();
-    total();
 }
 
 const displayEntryTask = () => {
@@ -53,6 +54,7 @@ const displayEntryTask = () => {
     })
 
     entryElm.innerHTML = str;
+    total();
 }
 
 const displayBadTask = () => {
@@ -69,7 +71,7 @@ const displayBadTask = () => {
     <button 
         onclick="switchTask('${item.id}', 'entry')"
         class="btn btn-warning">
-            <i class="fa-solid fa-chevron-right"></i>
+            <i class="fa-solid fa-chevron-left"></i>
         </button>    
     <button 
     onclick="handleOnDelete('${item.id}')"    
