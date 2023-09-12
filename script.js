@@ -30,7 +30,7 @@ const displayEntryTask = () => {
     <td>${item.hr}hr</td>
     <td class="text-end">
         <button 
-        onclick="
+        onclick="handleOnDelete('${item.id}')" 
         class="btn btn-danger">
             <i class="fa-solid fa-trash"></i>
         </button>
@@ -63,7 +63,7 @@ const displayBadTask = () => {
             <i class="fa-solid fa-chevron-right"></i>
         </button>    
     <button 
-        
+    onclick="handleOnDelete('${item.id}')"    
     class="btn btn-danger">
             <i class="fa-solid fa-trash"></i>
         </button>
