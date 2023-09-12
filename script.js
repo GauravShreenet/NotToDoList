@@ -1,10 +1,11 @@
 let taskList = [];
 const entryElm = document.getElementById("entry");
 const badElm = document.getElementById("bad");
+const totalHrElm = document.getElementById("totalHr");
 
 const handleOnSubmit = (form) => {
     const newTask = new FormData(form);
-
+    const ttlHrPerWeek = 24 * 7;
     const obj = {
         id: randomStr(),
         task: newTask.get("task").trim(),
@@ -12,16 +13,24 @@ const handleOnSubmit = (form) => {
         type: "entry"
     };
 
+    const ttlHrs = total();
+
+    if (ttlHrs + obj.hr > ttlHrPerWeek) {
+        return alert ("Sorry not enough time let to fit this task from week")
+    }
+    console.log(ttlHrs);
+
     taskList.push(obj);
     // console.log(obj);
     displayEntryTask();
     displayBadTask();
+    total();
 }
 
 const displayEntryTask = () => {
     let str = ``;
 
-    const entryListOnly = taskList.filter((item) =>   item.type === 'entry');
+    const entryListOnly = taskList.filter((item) => item.type === 'entry');
 
     entryListOnly.map((item, i) => {
         str += `<tr>
@@ -102,13 +111,24 @@ const switchTask = (id, type) => {
 
     displayEntryTask();
     displayBadTask();
+    total();
 
     // console.log(id, type);
 
 }
 
 const handleOnDelete = (id) => {
-    taskList = taskList.filter((item)=> item.id !== id);
-    displayEntryTask();
-    displayBadTask();
+    if (window.confirm("are you sure you want to delete?")) {
+        taskList = taskList.filter((item) => item.id !== id);
+        displayEntryTask();
+        displayBadTask();
+    }
+
+};
+
+const total = () => {
+    const ttl = taskList.reduce((acc, item) => acc + item.hr, 0);
+
+    totalHrElm.innerHTML = ttl;
+    return ttl;
 }
