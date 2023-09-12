@@ -1,6 +1,7 @@
 let taskList = [];
 const entryElm = document.getElementById("entry");
 const badElm = document.getElementById("bad");
+const badHrElm = document.getElementById("badHr")
 const totalHrElm = document.getElementById("totalHr");
 const ttlHrPerWeek = 24 * 7;
 
@@ -83,7 +84,11 @@ const displayBadTask = () => {
   </tr>`
     })
 
+    const badTtl = badListOnly.reduce((acc, item) => acc + item.hr, 0);
+    badHrElm.innerHTML = badTtl;
+    
     badElm.innerHTML = str;
+    
 }
 
 const randomStr = () => {
@@ -114,6 +119,7 @@ const switchTask = (id, type) => {
     displayEntryTask();
     displayBadTask();
     total();
+    
 
     // console.log(id, type);
 
